@@ -1,0 +1,74 @@
+# SmartAssign backend configuration. Every secret comes from an environment variable - nothing is hard-coded.
+spring:
+  application:
+    name: smartassign-backend
+  datasource:
+    url: ${SMARTASSIGN_DB_URL:jdbc:postgresql://localhost:5432/smartassign}
+    username: ${SMARTASSIGN_DB_USER:smartassign}
+    password: ${SMARTASSIGN_DB_PASSWORD:}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none            # Flyway owns the schema
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+          batch_size: 50
+  flyway:
+    enabled: true
+    # db/seed holds reference data only (city distances). No claims, handlers or users are seeded.
+    locations: ${SMARTASSIGN_FLYWAY_LOCATIONS:classpath:db/migration,classpath:db/seed}
+    # the old synthetic seed (R__seed_synthetic_dataset) was removed in V2; don't fail validation on it
+    ignore-migration-patterns: "*:missing,*:future"
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: never
+    include-stacktrace: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+smartassign:
+  jwt:
+    secret: ${SMARTASSIGN_JWT_SECRET:}
+    expiration-minutes: ${SMARTASSIGN_JWT_EXPIRATION_MINUTES:480}
+    issuer: smartassign
+  cors:
+    allowed-origins: ${SMARTASSIGN_CORS_ORIGINS:http://localhost:5173,http://localhost:3000}
+  ml:
+    enabled: ${SMARTASSIGN_ML_ENABLED:true}
+    base-url: ${SMARTASSIGN_ML_URL:http://localhost:8000}
+    connect-timeout-ms: 1000
+    read-timeout-ms: 3000
+    health-cache-seconds: 30
+  registration:
+    # Supervisors and handlers sign up with this code. Leave it empty to disable staff sign-up.
+    # Customers sign up freely.
+    staff-code: ${SMARTASSIGN_STAFF_REGISTRATION_CODE:}
+  claims:
+    # A handler "resolves on time" when the claim is resolved within this many days of assignment.
+    # Used to compute the handler's real success rate.
+    resolution-target-days: ${SMARTASSIGN_RESOLUTION_TARGET_DAYS:14}
+  routing:
+    recommendation-validity-minutes: 60
+    fairness-window-days: 30
+  claimcenter:
+    enabled: false
+    base-url: ""
+    auth-mode: NONE

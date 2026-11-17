@@ -1,0 +1,371 @@
+{
+  "model_version": "suitability-gradient-boosting-20261104-469bc489",
+  "model_family": "gradient_boosting",
+  "task": "BINARY_CLASSIFICATION",
+  "target": "assignment_success",
+  "positive_class_meaning": "assignment succeeded (synthetic label)",
+  "output": "predict_proba[:,1] of a class-balanced model - a RELATIVE suitability score, not a calibrated probability",
+  "features": [
+    "claim_type",
+    "policy_type",
+    "severity",
+    "complexity",
+    "estimated_loss",
+    "claim_location",
+    "claim_age_days",
+    "incident_type",
+    "fraud_risk_score",
+    "injury_involved",
+    "third_party_involved",
+    "adjuster_expertise",
+    "adjuster_experience_years",
+    "adjuster_current_workload",
+    "adjuster_max_workload",
+    "adjuster_availability",
+    "adjuster_location",
+    "adjuster_success_rate",
+    "adjuster_avg_resolution_days",
+    "similar_claims_handled",
+    "adjuster_active",
+    "distance_km",
+    "workload_ratio",
+    "expertise_match"
+  ],
+  "categorical_features": [
+    "claim_type",
+    "policy_type",
+    "severity",
+    "complexity",
+    "claim_location",
+    "incident_type",
+    "adjuster_expertise",
+    "adjuster_location"
+  ],
+  "numerical_features": [
+    "estimated_loss",
+    "claim_age_days",
+    "fraud_risk_score",
+    "injury_involved",
+    "third_party_involved",
+    "adjuster_experience_years",
+    "adjuster_current_workload",
+    "adjuster_max_workload",
+    "adjuster_availability",
+    "adjuster_success_rate",
+    "adjuster_avg_resolution_days",
+    "similar_claims_handled",
+    "adjuster_active",
+    "distance_km",
+    "workload_ratio",
+    "expertise_match"
+  ],
+  "excluded_columns": [
+    "claim_id",
+    "adjuster_id",
+    "previous_reassignments",
+    "assignment_delay_hours"
+  ],
+  "training_categories": {
+    "claim_type": [
+      "AUTO",
+      "LIABILITY",
+      "PROPERTY",
+      "WORKERS_COMPENSATION"
+    ],
+    "policy_type": [
+      "AUTO",
+      "COMMERCIAL_LIABILITY",
+      "COMMERCIAL_PROPERTY",
+      "GENERAL_LIABILITY",
+      "HOME",
+      "WORKERS_COMPENSATION"
+    ],
+    "severity": [
+      "CRITICAL",
+      "HIGH",
+      "LOW",
+      "MEDIUM"
+    ],
+    "complexity": [
+      "HIGH",
+      "LOW",
+      "MEDIUM"
+    ],
+    "claim_location": [
+      "Bengaluru",
+      "Chennai",
+      "Delhi",
+      "Hyderabad",
+      "Kolkata",
+      "Mumbai",
+      "Pune"
+    ],
+    "incident_type": [
+      "ACCIDENT",
+      "COLLISION",
+      "DAMAGE",
+      "FIRE",
+      "FLOOD",
+      "INJURY",
+      "LIABILITY",
+      "STORM",
+      "THEFT",
+      "WORKPLACE_ACCIDENT"
+    ],
+    "adjuster_expertise": [
+      "AUTO",
+      "LIABILITY",
+      "MULTI_P_AND_C",
+      "PROPERTY",
+      "WORKERS_COMPENSATION"
+    ],
+    "adjuster_location": [
+      "Bengaluru",
+      "Chennai",
+      "Delhi",
+      "Hyderabad",
+      "Kolkata",
+      "Mumbai",
+      "Pune"
+    ]
+  },
+  "training_numeric_ranges": {
+    "estimated_loss": {
+      "min": 21384.0,
+      "max": 3763090.0
+    },
+    "claim_age_days": {
+      "min": 0.0,
+      "max": 30.0
+    },
+    "fraud_risk_score": {
+      "min": 0.01,
+      "max": 0.95
+    },
+    "injury_involved": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "third_party_involved": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "adjuster_experience_years": {
+      "min": 1.0,
+      "max": 20.0
+    },
+    "adjuster_current_workload": {
+      "min": 0.0,
+      "max": 18.0
+    },
+    "adjuster_max_workload": {
+      "min": 8.0,
+      "max": 18.0
+    },
+    "adjuster_availability": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "adjuster_success_rate": {
+      "min": 0.55,
+      "max": 0.99
+    },
+    "adjuster_avg_resolution_days": {
+      "min": 2.0,
+      "max": 17.3
+    },
+    "similar_claims_handled": {
+      "min": 0.0,
+      "max": 193.0
+    },
+    "adjuster_active": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "distance_km": {
+      "min": 0.0,
+      "max": 2292.7
+    },
+    "workload_ratio": {
+      "min": 0.0,
+      "max": 1.0
+    },
+    "expertise_match": {
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "selection_rule": "highest mean 5-fold CV ROC-AUC on the training split; ties within 0.002 broken by CV average precision",
+  "metrics": {
+    "selected": "gradient_boosting",
+    "candidates": {
+      "logistic_regression": {
+        "cv_5fold_train": {
+          "roc_auc": {
+            "mean": 0.974,
+            "std": 0.0041
+          },
+          "average_precision": {
+            "mean": 0.7964,
+            "std": 0.0425
+          },
+          "f1": {
+            "mean": 0.726,
+            "std": 0.0051
+          },
+          "brier": {
+            "mean": 0.0601,
+            "std": 0.0019
+          }
+        },
+        "holdout_test": {
+          "accuracy": 0.92,
+          "precision": 0.5763,
+          "recall": 0.9934,
+          "f1": 0.7295,
+          "roc_auc": 0.9749,
+          "average_precision": 0.7478,
+          "brier": 0.0619,
+          "confusion_matrix": {
+            "tn": 1137,
+            "fp": 111,
+            "fn": 1,
+            "tp": 151
+          }
+        }
+      },
+      "decision_tree": {
+        "cv_5fold_train": {
+          "roc_auc": {
+            "mean": 0.9525,
+            "std": 0.008
+          },
+          "average_precision": {
+            "mean": 0.7505,
+            "std": 0.0342
+          },
+          "f1": {
+            "mean": 0.7294,
+            "std": 0.0083
+          },
+          "brier": {
+            "mean": 0.0617,
+            "std": 0.0034
+          }
+        },
+        "holdout_test": {
+          "accuracy": 0.9207,
+          "precision": 0.5858,
+          "recall": 0.9211,
+          "f1": 0.7161,
+          "roc_auc": 0.9637,
+          "average_precision": 0.7204,
+          "brier": 0.0637,
+          "confusion_matrix": {
+            "tn": 1149,
+            "fp": 99,
+            "fn": 12,
+            "tp": 140
+          }
+        }
+      },
+      "random_forest": {
+        "cv_5fold_train": {
+          "roc_auc": {
+            "mean": 0.9711,
+            "std": 0.0039
+          },
+          "average_precision": {
+            "mean": 0.7869,
+            "std": 0.0266
+          },
+          "f1": {
+            "mean": 0.7534,
+            "std": 0.0125
+          },
+          "brier": {
+            "mean": 0.0574,
+            "std": 0.0021
+          }
+        },
+        "holdout_test": {
+          "accuracy": 0.9286,
+          "precision": 0.6074,
+          "recall": 0.9671,
+          "f1": 0.7462,
+          "roc_auc": 0.9735,
+          "average_precision": 0.7175,
+          "brier": 0.0584,
+          "confusion_matrix": {
+            "tn": 1153,
+            "fp": 95,
+            "fn": 5,
+            "tp": 147
+          }
+        }
+      },
+      "gradient_boosting": {
+        "cv_5fold_train": {
+          "roc_auc": {
+            "mean": 0.9753,
+            "std": 0.0047
+          },
+          "average_precision": {
+            "mean": 0.8296,
+            "std": 0.0279
+          },
+          "f1": {
+            "mean": 0.7491,
+            "std": 0.0162
+          },
+          "brier": {
+            "mean": 0.0531,
+            "std": 0.004
+          }
+        },
+        "holdout_test": {
+          "accuracy": 0.9293,
+          "precision": 0.61,
+          "recall": 0.9671,
+          "f1": 0.7481,
+          "roc_auc": 0.9769,
+          "average_precision": 0.7662,
+          "brier": 0.0566,
+          "confusion_matrix": {
+            "tn": 1154,
+            "fp": 94,
+            "fn": 5,
+            "tp": 147
+          }
+        }
+      }
+    },
+    "reference_baselines": {
+      "same_city_rule": {
+        "roc_auc": 0.898,
+        "average_precision": 0.5607
+      },
+      "distance_only_logistic": {
+        "roc_auc": 0.9674,
+        "average_precision": 0.6766
+      }
+    },
+    "holdout": "stratified 20% split, random_state=42 (same as the original notebook)"
+  },
+  "final_fit": "selected configuration refit on all 7,000 rows",
+  "dataset_sha256": "469bc4892455d5cd76941e04472d4d6b839f2fa70adbb3cd6b254a249c705737",
+  "dataset_rows": 7000,
+  "class_balance": {
+    "0": 6240,
+    "1": 760
+  },
+  "trained_at": "2026-11-04T12:51:04+00:00",
+  "environment": {
+    "python": "3.13.18",
+    "scikit_learn": "1.9.1",
+    "pandas": "3.0.5",
+    "numpy": "2.5.3",
+    "joblib": "1.6.0"
+  },
+  "synthetic_data": true
+}

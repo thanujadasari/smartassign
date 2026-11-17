@@ -1,0 +1,9 @@
+# Runtime. scikit-learn MUST match the version that produced model-artifacts/suitability_model.joblib
+# (recorded in model_metadata.json -> environment.scikit_learn); the service refuses to load on a mismatch.
+scikit-learn==1.9.1
+pandas==3.0.5
+numpy==2.5.3
+joblib==1.6.0
+pydantic==2.13.5
+fastapi>=0.115.12,<1.0
+uvicorn==0.54.0

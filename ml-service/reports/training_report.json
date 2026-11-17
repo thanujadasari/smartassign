@@ -1,0 +1,156 @@
+{
+  "selected": "gradient_boosting",
+  "candidates": {
+    "logistic_regression": {
+      "cv_5fold_train": {
+        "roc_auc": {
+          "mean": 0.974,
+          "std": 0.0041
+        },
+        "average_precision": {
+          "mean": 0.7964,
+          "std": 0.0425
+        },
+        "f1": {
+          "mean": 0.726,
+          "std": 0.0051
+        },
+        "brier": {
+          "mean": 0.0601,
+          "std": 0.0019
+        }
+      },
+      "holdout_test": {
+        "accuracy": 0.92,
+        "precision": 0.5763,
+        "recall": 0.9934,
+        "f1": 0.7295,
+        "roc_auc": 0.9749,
+        "average_precision": 0.7478,
+        "brier": 0.0619,
+        "confusion_matrix": {
+          "tn": 1137,
+          "fp": 111,
+          "fn": 1,
+          "tp": 151
+        }
+      }
+    },
+    "decision_tree": {
+      "cv_5fold_train": {
+        "roc_auc": {
+          "mean": 0.9525,
+          "std": 0.008
+        },
+        "average_precision": {
+          "mean": 0.7505,
+          "std": 0.0342
+        },
+        "f1": {
+          "mean": 0.7294,
+          "std": 0.0083
+        },
+        "brier": {
+          "mean": 0.0617,
+          "std": 0.0034
+        }
+      },
+      "holdout_test": {
+        "accuracy": 0.9207,
+        "precision": 0.5858,
+        "recall": 0.9211,
+        "f1": 0.7161,
+        "roc_auc": 0.9637,
+        "average_precision": 0.7204,
+        "brier": 0.0637,
+        "confusion_matrix": {
+          "tn": 1149,
+          "fp": 99,
+          "fn": 12,
+          "tp": 140
+        }
+      }
+    },
+    "random_forest": {
+      "cv_5fold_train": {
+        "roc_auc": {
+          "mean": 0.9711,
+          "std": 0.0039
+        },
+        "average_precision": {
+          "mean": 0.7869,
+          "std": 0.0266
+        },
+        "f1": {
+          "mean": 0.7534,
+          "std": 0.0125
+        },
+        "brier": {
+          "mean": 0.0574,
+          "std": 0.0021
+        }
+      },
+      "holdout_test": {
+        "accuracy": 0.9286,
+        "precision": 0.6074,
+        "recall": 0.9671,
+        "f1": 0.7462,
+        "roc_auc": 0.9735,
+        "average_precision": 0.7175,
+        "brier": 0.0584,
+        "confusion_matrix": {
+          "tn": 1153,
+          "fp": 95,
+          "fn": 5,
+          "tp": 147
+        }
+      }
+    },
+    "gradient_boosting": {
+      "cv_5fold_train": {
+        "roc_auc": {
+          "mean": 0.9753,
+          "std": 0.0047
+        },
+        "average_precision": {
+          "mean": 0.8296,
+          "std": 0.0279
+        },
+        "f1": {
+          "mean": 0.7491,
+          "std": 0.0162
+        },
+        "brier": {
+          "mean": 0.0531,
+          "std": 0.004
+        }
+      },
+      "holdout_test": {
+        "accuracy": 0.9293,
+        "precision": 0.61,
+        "recall": 0.9671,
+        "f1": 0.7481,
+        "roc_auc": 0.9769,
+        "average_precision": 0.7662,
+        "brier": 0.0566,
+        "confusion_matrix": {
+          "tn": 1154,
+          "fp": 94,
+          "fn": 5,
+          "tp": 147
+        }
+      }
+    }
+  },
+  "reference_baselines": {
+    "same_city_rule": {
+      "roc_auc": 0.898,
+      "average_precision": 0.5607
+    },
+    "distance_only_logistic": {
+      "roc_auc": 0.9674,
+      "average_precision": 0.6766
+    }
+  },
+  "holdout": "stratified 20% split, random_state=42 (same as the original notebook)"
+}

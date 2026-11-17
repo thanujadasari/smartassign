@@ -1,0 +1,57 @@
+# SmartAssign - local development stack.
+# Values come from .env (copy .env.example to .env). Demo accounts are for local development only.
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: smartassign
+      POSTGRES_USER: smartassign
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U smartassign -d smartassign"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    build: ./backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ml-service:
+        condition: service_started
+    environment:
+      SMARTASSIGN_DB_URL: jdbc:postgresql://postgres:5432/smartassign
+      SMARTASSIGN_DB_USER: smartassign
+      SMARTASSIGN_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      SMARTASSIGN_JWT_SECRET: ${SMARTASSIGN_JWT_SECRET:?set SMARTASSIGN_JWT_SECRET in .env}
+      SMARTASSIGN_CORS_ORIGINS: ${SMARTASSIGN_CORS_ORIGINS:-http://localhost:5173,http://localhost:3000}
+      SMARTASSIGN_ML_ENABLED: ${SMARTASSIGN_ML_ENABLED:-true}
+      SMARTASSIGN_ML_URL: http://ml-service:8000
+      # supervisors and handlers sign up with this code; empty = staff sign-up disabled
+      SMARTASSIGN_STAFF_REGISTRATION_CODE: ${SMARTASSIGN_STAFF_REGISTRATION_CODE:-}
+      SMARTASSIGN_RESOLUTION_TARGET_DAYS: ${SMARTASSIGN_RESOLUTION_TARGET_DAYS:-14}
+    ports:
+      - "8080:8080"
+
+  ml-service:
+    build:
+      context: .
+      dockerfile: ml-service/Dockerfile
+    # internal only: no published port. The backend reaches it at http://ml-service:8000
+    expose:
+      - "8000"
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"     # open http://localhost:3000
+
+volumes:
+  pgdata:

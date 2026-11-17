@@ -1,0 +1,3 @@
+package com.smartassign.domain;
+
+public enum PolicyType { AUTO, HOME, COMMERCIAL_PROPERTY, GENERAL_LIABILITY, COMMERCIAL_LIABILITY, WORKERS_COMPENSATION }
